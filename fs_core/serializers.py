@@ -18,6 +18,9 @@ class MovieSerializer(serializers.ModelSerializer):
             'get_thumbnail',
             'get_video',
             'videos',
+            'status',
+            'year_of_production',
+            'views_count',
         )
 
 class ProfileSerializer(serializers.ModelSerializer):

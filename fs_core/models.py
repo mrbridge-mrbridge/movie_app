@@ -92,24 +92,32 @@ class Movie(models.Model):
     """the Movie"""
     
     GENRE = (
-        ('action', 'Action'),
-        ('drama', 'Drama'),
-        ('horror', 'Horror'),
-        ('comedy', 'Comedy'),
-        ('fiction', 'Fiction'),
-        ('romance', 'Romance'),
-        ('documentary', 'Documentary'),
-        ('animation', 'Animation'),
-        ('fantasy', 'Fantasy'),
-        ('sports', 'Sports'),
-        ('spirituality', 'Spirituality')
+        ('Action', 'Action'),
+        ('Drama', 'Drama'),
+        ('Horror', 'Horror'),
+        ('Comedy', 'Comedy'),
+        ('Fiction', 'Fiction'),
+        ('Romance', 'Romance'),
+        ('Documentary', 'Documentary'),
+        ('Animation', 'Animation'),
+        ('Fantasy', 'Fantasy'),
+        ('Sports', 'Sports'),
+        ('Spirituality', 'Spirituality')
     )
     
+    STATUS = (
+        ('Most Watched','Most Watched'),
+        ('Top Rated', 'Top Rated'),
+        ('Recently Added', 'Recently Added')
+    )
     title = models.CharField(max_length=500, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     uuid = models.UUIDField(default=uuid.uuid4, unique=True)
     date_added = models.DateTimeField(auto_now_add=True)
     movie_type = models.CharField(choices=MOVIE_TYPE, max_length=50)
+    status = models.CharField(choices=STATUS, max_length=50, blank=True, null=True)
+    year_of_production = models.DateField(blank=True, null=True)
+    views_count = models.IntegerField(default=0)
     genre = models.CharField(choices=GENRE, max_length=50)
     image = models.ImageField(upload_to='images/', blank=True, null=True)
     thumbnail = models.ImageField(upload_to='images/thumbnail/', blank=True, null=True)
@@ -141,7 +149,7 @@ class Movie(models.Model):
                 return ('http://127.0.0.1:8000' + self.thumbnail.url)
             return ''
         
-    def make_thumbnail(self, image, size=(300, 200)):
+    def make_thumbnail(self, image, size=(400, 300)):
         """create thumbnail from image"""
         img = Image.open(image)
         img.convert('RGB')

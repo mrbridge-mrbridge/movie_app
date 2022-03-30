@@ -11,4 +11,6 @@ urlpatterns = [
     path('user/create/', views.ProfileCreate.as_view(), name=""),
     path('watch/<str:movie_id>/', views.ShowMovie.as_view(), name=""),
     path('all-movies/search/<str:pk>', views.search_movie, name=""),
+    path('detail/<str:movie_id>', views.ShowMovieDetail.as_view(), name=""),
+    path('all-movies/genre/<str:genre_name>', views.GenreMovie.as_view(), name="")
 ]
