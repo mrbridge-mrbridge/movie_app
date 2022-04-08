@@ -5,6 +5,7 @@ import Movie from '../views/MovieDetail.vue'
 import AllMovies from '../views/AllMovies.vue'
 import GenreMovie from '../views/GenreMovie.vue'
 import SearchMovie from '../views/SearchMovie.vue'
+import SignUp from '../views/SignUp.vue'
 
 const routes = [
   {
@@ -36,9 +37,14 @@ const routes = [
     component: GenreMovie
   },
   {
-    path: '/search/:searchTerm',
+    path: '/search',
     name: 'SearchMovie',
     component: SearchMovie
+  },
+  {
+    path: '/sign-up',
+    name: 'SignUp',
+    component: SignUp
   }
 ]
 

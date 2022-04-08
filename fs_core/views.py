@@ -14,7 +14,7 @@ from rest_framework import status
 #    def get(self, request, *args, **kwargs):
 #        """renders home page"""
 #        if request.user.is_authenticated:
-#            return redirect('myprofiles')
+#            returnredirect('myprofiles')
 #        return render(request, 'home.html')
 
 class AllMovies(APIView):
@@ -121,10 +121,10 @@ class ShowMovie(APIView):
         except Movie.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
         
-@api_view(['GET'])
-def search_movie(request, pk):
+@api_view(['POST'])
+def search_movie(request):
     """search a movie"""
-    query = pk
+    query = request.data.get('query', '')
     
     if query:
         movies = Movie.objects.filter(Q(title__icontains=query) | Q(description__icontains=query))

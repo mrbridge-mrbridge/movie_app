@@ -5,7 +5,7 @@
     </div>
     <div class="columns is-multiline">
       <div class="column is-12">
-          <h2 class="is-size-2 has-text-centered">{{"Movies That Match '" + searchTerm +"'"}}</h2>
+          <h2 class="is-size-2 has-text-centered">{{"Movies That Match '" + query +"'"}}</h2>
       </div>
 
       <div class="column is-3" 
@@ -32,13 +32,22 @@ export default {
   data() {
     return {
       search: [],
+      query: ''
     }
   },
   components: {
   },
   mounted() {
-    this.getSearchMovies()
+    let url = window.location.search.substring(1)
+    let params = new URLSearchParams(url)
+
+    if (params.get('query')) {
+      this.query = params.get('query')
+
+      this.getSearchMovies()
+    }
   },
+
   watch: {
     $route(to, from) {
       if (to.name === 'getSearchMovies') {
@@ -48,10 +57,10 @@ export default {
   },
   methods: {
     async getSearchMovies() {
-      const searchTerm = this.$route.params.searchTerm
+      const searchTerm = this.query
       this.$store.commit('setIsLoading', true)
       await axios
-        .get(`/api/v1/all-movies/search/${searchTerm}`)
+        .post('/api/v1/all-movies/search/', {'query': this.query})
         .then(response => {
           this.search = response.data
         })
@@ -59,7 +68,7 @@ export default {
           console.log(error)
         })
       document.title = 'Search | '+ searchTerm + ' | FireSide'
-      this.searchTerm = searchTerm
+      
       this.$store.commit('setIsLoading', false)
     }
   }

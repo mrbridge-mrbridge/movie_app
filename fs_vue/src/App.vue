@@ -118,7 +118,6 @@ export default {
 
   .box {
     margin-left: 0.9rem;
-    display: inline-block;
   }
 
 .gen-re {
